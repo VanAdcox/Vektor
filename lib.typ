@@ -1,3 +1,13 @@
+// vektor.typ
+// Free-Body Diagram (FBD) Drawing Utilities for Typst
+//
+// # Functions
+// - force(label, direction, offset): Defines a force vector with a label, direction, and optional offset.
+// - axis(label, direction, offset): Defines an axis with a label, direction, and optional offset.
+// - fbd(system, forces, axes, axes_offset): Draws a free-body diagram for a given system, list of forces, and axes.
+//
+// # Directions
+// Supported directions: north, northeast, east, southeast, south, southwest, west, northwest, out, into.
 #import "@preview/cetz:0.4.2"
 
 #let _directions = (
@@ -28,10 +38,9 @@
 
     
 #let fbd(system: "?", forces: (), axes: (axis("X","east"),axis("Y","north"),), axes_offset: (3,0)) = {
-  box[
+  block[
     #cetz.canvas({
       import cetz.draw: *
-      // Settings
       set-style(mark: (end: ">"))
 
       // System Label
@@ -83,33 +92,3 @@
     })
   ]
 }
-#fbd(
-  system:"test",
-  forces: (
-    force($W_(E b)$, "south"),
-    force($W_(E b)$, "east"),
-    force($N_(E b)$, "north")
-  ),
-  axes:(
-    axis("nw","northwest"),
-    axis("n","north"),
-    axis("ne","northeast"),
-    axis("e","east"),
-    axis("se","southeast"),
-    axis("s","south"),
-    axis("w","west"),
-    axis("sw","southwest",),
-  ),
-)
-
-#fbd(
-  system:"puck",
-  forces: (
-    force($W_(r p)$, "south"),
-    force($N_(r p)$, "northeast"),
-  ),
-  axes: (
-    axis("c", "east"),
-    axis("t", "out"),
-  ),
-)
