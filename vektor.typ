@@ -9,6 +9,8 @@
   southwest: (-1,-1),
   west: (-1,0),
   northwest: (-1,1),
+  out: (0,0),
+  into: (0,0),
 )
 
 #let _anchor_for_direction = (direction) => if direction == "north" or direction == "south" {"west"} else {"north"}
@@ -51,13 +53,32 @@
  
       for axis in axes {
         let dir = _directions.at(axis.direction)
-        line(axes_offset,(axes_offset.at(0) + dir.at(0),axes_offset.at(1) + dir.at(1)), name:"X")
-        content(
-          ("X.start", 70%, "X.end"),
-          padding: 0.15,
-          anchor: _anchor_for_direction(axis.direction),
-          [#axis.label]
-        )
+        if axis.direction == "out" {
+          circle((axes_offset.at(0), axes_offset.at(1)), radius: 0.15, fill: white)
+          circle((axes_offset.at(0), axes_offset.at(1)), radius: 0.05, fill: black)
+          content(
+            ((axes_offset.at(0), axes_offset.at(1) + 0.2)),
+            anchor: "south",
+            [#axis.label]
+          )
+        } else if axis.direction == "into" {
+          circle((axes_offset.at(0), axes_offset.at(1)), radius: 0.15,fill:white)
+          line((axes_offset.at(0) - 0.07, axes_offset.at(1) - 0.07), (axes_offset.at(0) + 0.07, axes_offset.at(1) + 0.07), mark:(end:false))
+          line((axes_offset.at(0) - 0.07, axes_offset.at(1) + 0.07), (axes_offset.at(0) + 0.07, axes_offset.at(1) - 0.07), mark:(end:false))
+          content(
+            ((axes_offset.at(0) + 0.2, axes_offset.at(1) + 0.2)),
+            anchor: "south",
+            [#axis.label]
+          )
+        } else {
+          line(axes_offset,(axes_offset.at(0) + dir.at(0),axes_offset.at(1) + dir.at(1)), name:"X")
+          content(
+            ("X.start", 70%, "X.end"),
+            padding: 0.15,
+            anchor: _anchor_for_direction(axis.direction),
+            [#axis.label]
+          )
+        }
       }
     })
   ]
@@ -78,5 +99,17 @@
     axis("s","south"),
     axis("w","west"),
     axis("sw","southwest",),
+  ),
+)
+
+#fbd(
+  system:"puck",
+  forces: (
+    force($W_(r p)$, "south"),
+    force($N_(r p)$, "northeast"),
+  ),
+  axes: (
+    axis("c", "east"),
+    axis("t", "out"),
   ),
 )
