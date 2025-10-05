@@ -25,7 +25,7 @@
 
 #let _anchor_for_direction = (direction) => if direction == "north" or direction == "south" {"west"} else {"north"}
 
-#let force = (label, direction, offset: (0,0)) => (
+#let force = (label, direction, offset: (0,0), anchor: none) => (
   label: label,
   direction: direction,
   offset: offset,
@@ -57,7 +57,7 @@
         content(
           ("X.start", 70%, "X.end"),
           padding: 0.1,
-          anchor: _anchor_for_direction(force.direction),
+          anchor: if force.anchor != none { force.anchor } else { _anchor_for_direction(force.direction) },
           [#force.label]
         )
       }
