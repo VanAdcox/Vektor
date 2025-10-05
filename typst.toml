@@ -4,4 +4,12 @@ version = "0.1.0"
 entrypoint = "lib.typ"
 authors = ["VanAdcox"]
 license = "MIT"
-description = "Physics Utility for drawing Free Body Diagrams (FBDs)"
+description = "Physics Utility for drawing Free Body Diagrams (FBDs) using CeTZ"
+keywords = ["physics", "diagram"]
+repository = "https://github.com/VanAdcox/Vektor"
+disciplines = [
+    "engineering",
+    "mathematics",
+    "physics",
+]
+exclude = ["examples"]
