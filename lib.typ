@@ -29,6 +29,7 @@
   label: label,
   direction: direction,
   offset: offset,
+  anchor: anchor,
 )
 
 #let axis = (label, direction, offset: (0,0)) => (
